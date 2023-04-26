@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="../bundle_myscript.js"></script>
+</head>
+
+<body>
+
+    <div id="home_page">
+        <div id="header">
+            <div>
+                <img id="top_logo" src="../assets/trail_logo_2.jpeg" alt="">
+            </div>
+            <div id="my_address">
+                Address :
+            </div>
+            <div>
+                <img id="kebab_icon" data-target="#exampleModalLong" data-toggle="modal" src="../assets/kebab.png" alt="">
+            </div>
+        </div>
+        <div id="view_sent_heading">
+            VIEW UNCLAIMED TRANSACTIONS
+        </div>
+        <div class="line"></div>
+        
+        <div id="tx_unclaimed_list">
+            <div id="tx_unclaimed_1">
+                <div class="unclaimed_box_1">
+                    0xdA2D10c332E6D86d7543F30f64A90770346A1f54 SENT YOU 20 ETHER
+                </div>
+                <div class="unclaimed_claim_button">
+                    CLAIM
+                </div>
+                <div class="line"></div>
+            </div>
+            <div id="tx_unclaimed_1">
+                <div class="unclaimed_box_1">
+                    0xdA2D10c332E6D86d7543F30f64A90770346A1f54 SENT YOU 20 ETHER
+                </div>
+                <div class="unclaimed_claim_button">
+                    CLAIM
+                </div>
+                <div class="line"></div>
+            </div>
+            <div id="tx_unclaimed_1">
+                <div class="unclaimed_box_1">
+                    0xdA2D10c332E6D86d7543F30f64A90770346A1f54 SENT YOU 20 ETHER
+                </div>
+                <div class="unclaimed_claim_button">
+                    CLAIM
+                </div>
+                <div class="line"></div>
+            </div>
+            <div id="tx_unclaimed_1">
+                <div class="unclaimed_box_1">
+                    0xdA2D10c332E6D86d7543F30f64A90770346A1f54 SENT YOU 20 ETHER
+                </div>
+                <div class="unclaimed_claim_button">
+                    CLAIM
+                </div>
+                <div class="line"></div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="revert_conf_box" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Options</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="revert_heading" style="text-align: center;">
+                            Do you want to revert this transaction?
+                        </div>
+                        <div id="revert_info" style="margin-top: 30px; text-align: center;">
+                            20 ETHER SENT TO 0xdA2D10c332E6D86d7543F30f <br> 64A90770346A1f54
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Reject</button>
+                        <button type="button" class="btn" style="background-color: #686C8C; color: white;">Accept</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="../bootstrap_files/slim.js"></script>
+    <script src="../bootstrap_files/pooper.js"></script>
+    <script src="../bootstrap_files/bootstrap.min.js"></script>
+</body>
+
+</html>

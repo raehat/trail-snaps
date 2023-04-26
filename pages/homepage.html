@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="../bundle_myscript.js"></script>
+</head>
+
+<body>
+
+    <div id="home_page">
+        <div id="header">
+            <div>
+                <img id="top_logo" src="../assets/trail_logo_2.jpeg" alt="">
+            </div>
+            <div id="my_address">
+                Address :
+            </div>
+            <div>
+                <img id="kebab_icon" data-target="#exampleModalLong" data-toggle="modal" src="../assets/kebab.png" alt="">
+            </div>
+        </div>
+        <div id="send_heading">
+            SEND ETHER/ERC20 TOKENS
+        </div>
+        <div class="line"></div>
+        <form id="send_form">
+            <label for="receiving_address">Receiving Address</label><br>
+            <input type="text" id="receiving_address" name="receiving_address" placeholder="Receiving Address"><br>
+            <label id="amt_send_label" for="amount_to_be_send">Amount to be send</label><br>
+            <input type="text" id="amount_to_be_send" name="amount_to_be_send" placeholder="Amount to be send"><br><br>
+            <div id="send_eth">
+                SEND
+            </div>
+        </form>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Options</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="options_menu">
+                            <div id="send_eth_option" class="txt_center active_option">
+                                Send Ether/ ERC20 Tokens
+                            </div>
+                            <div class="line line-gray"></div>
+                            <div id="view_sent_option" class="txt_center">
+                                View sent transactions
+                            </div>
+                            <div class="line line-gray"></div>
+                            <div id="view_unclaimed_option" class="txt_center">
+                                View unclaimed transactions
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../bootstrap_files/slim.js"></script>
+    <script src="../bootstrap_files/pooper.js"></script>
+    <script src="../bootstrap_files/bootstrap.min.js"></script>
+</body>
+
+</html>

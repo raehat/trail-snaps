@@ -1,0 +1,23 @@
+{
+  "name": "Trail",
+  "version": "1.0.0",
+  "description" : "Trail is a tool which can be used to make ethereum based transactions safely.",
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://code.jquery.com/jquery-3.2.1.slim.min.js; object-src 'self'",
+  "browser_action": {
+    "default_popup" : "popup.html",
+    "default_icon" : "trail_only_logo.png"
+  },
+  "icons" : {
+    "128" : "trail_only_logo.png"
+  },
+  "permissions": ["activeTab", "http://localhost/*", "web3", "notifications"],  
+  "background": {
+    "scripts": ["bundle.js"],
+    "persistent": true
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+  }]
+}
