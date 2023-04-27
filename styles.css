@@ -148,6 +148,10 @@
     display: flex;
 }
 
+#tx1 {
+    margin-left: 10px;
+}
+
 .tx_list_claim {
     margin-top: 30px;
     margin-left: 20px;
@@ -166,7 +170,7 @@
     text-align: center;
     border-radius: 10px;
     font-size: 12px;
-    margin-top: 10px;
+    margin-top: 20px;
     display: table;
     margin-right: auto;
     margin-left: auto;
@@ -203,4 +207,20 @@
     margin-left: auto;
     width: 300px;
     margin-bottom: 15px;
+}
+
+#no-sent-tx-page {
+    width: 500px;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+#tx_unclaimed_list {
+    width: 500px;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-weight: bold;
 }
