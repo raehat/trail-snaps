@@ -81,6 +81,50 @@ const contract_ether_ABI = [
         "type": "event"
     },
     {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "payId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "receiver",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "PaymentReverted",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_paymentId",
+                "type": "uint256"
+            }
+        ],
+        "name": "revertPayment",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "inputs": [
             {
                 "internalType": "address payable",
@@ -149,6 +193,11 @@ const contract_ether_ABI = [
                         "type": "bool"
                     },
                     {
+                        "internalType": "bool",
+                        "name": "reverted",
+                        "type": "bool"
+                    },
+                    {
                         "internalType": "uint256",
                         "name": "paymentId",
                         "type": "uint256"
@@ -197,6 +246,11 @@ const contract_ether_ABI = [
                     {
                         "internalType": "bool",
                         "name": "claimed",
+                        "type": "bool"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "reverted",
                         "type": "bool"
                     },
                     {
@@ -249,6 +303,11 @@ const contract_ether_ABI = [
                 "type": "bool"
             },
             {
+                "internalType": "bool",
+                "name": "reverted",
+                "type": "bool"
+            },
+            {
                 "internalType": "uint256",
                 "name": "paymentId",
                 "type": "uint256"
@@ -295,6 +354,11 @@ const contract_ether_ABI = [
             {
                 "internalType": "bool",
                 "name": "claimed",
+                "type": "bool"
+            },
+            {
+                "internalType": "bool",
+                "name": "reverted",
                 "type": "bool"
             },
             {
@@ -347,6 +411,11 @@ const contract_ether_ABI = [
                 "type": "bool"
             },
             {
+                "internalType": "bool",
+                "name": "reverted",
+                "type": "bool"
+            },
+            {
                 "internalType": "uint256",
                 "name": "paymentId",
                 "type": "uint256"
@@ -357,7 +426,7 @@ const contract_ether_ABI = [
     }
 ]
 
-const contract_ether_address = '0x1C0e10649b22787e500191C108a77AfAD22c4254'
+const contract_ether_address = '0x610319176dFA876d438d20E71C390Cb74ED5Ab66'
 
 
 const createMetaMaskProvider = require('metamask-extension-provider')
@@ -411,6 +480,55 @@ window.onload = async function () {
         document.getElementById("connect_button").addEventListener("click", connect_metamask);
     else if (window.location.href.indexOf("homepage.html") !== -1) {
 
+        var selectedToken = "eth_token_text"
+        var selectedTokenText = "ETHER"
+
+        document.getElementById("eth_token_text").addEventListener("click", () => {
+            document.getElementById(selectedToken).innerHTML = selectedTokenText
+            document.getElementById("eth_token_text").innerHTML = "ETHER (SELECTED)"
+            selectedToken = "eth_token_text"
+            selectedTokenText = "ETHER"
+
+            document.getElementById("sending_unit_name").innerHTML = "ETHER"
+            document.getElementById("eth_logo").src = "../erc20data/eth_logo.png"
+        })
+        document.getElementById("tether_token_text").addEventListener("click", () => {
+            document.getElementById(selectedToken).innerHTML = selectedTokenText
+            document.getElementById("tether_token_text").innerHTML = "TETHER (SELECTED)"
+            selectedToken = "tether_token_text"
+            selectedTokenText = "TETHER"
+
+            document.getElementById("sending_unit_name").innerHTML = "TETHER"
+            document.getElementById("eth_logo").src = "../erc20data/tether_logo.png"
+        })
+        document.getElementById("binance_token_text").addEventListener("click", () => {
+            document.getElementById(selectedToken).innerHTML = selectedTokenText
+            document.getElementById("binance_token_text").innerHTML = "BINANCE (SELECTED)"
+            selectedToken = "binance_token_text"
+            selectedTokenText = "BINANCE"
+
+            document.getElementById("sending_unit_name").innerHTML = "BINANCE"
+            document.getElementById("eth_logo").src = "../erc20data/binance_logo.png"
+        })
+        document.getElementById("uniswap_token_text").addEventListener("click", () => {
+            document.getElementById(selectedToken).innerHTML = selectedTokenText
+            document.getElementById("uniswap_token_text").innerHTML = "UNISWAP (SELECTED)"
+            selectedToken = "uniswap_token_text"
+            selectedTokenText = "UNISWAP"
+
+            document.getElementById("sending_unit_name").innerHTML = "UNISWAP"
+            document.getElementById("eth_logo").src = "../erc20data/uniswap_logo.svg"
+        })
+        document.getElementById("aave_token_text").addEventListener("click", () => {
+            document.getElementById(selectedToken).innerHTML = selectedTokenText
+            document.getElementById("aave_token_text").innerHTML = "AAVE (SELECTED)"
+            selectedToken = "aave_token_text"
+            selectedTokenText = "AAVE"
+
+            document.getElementById("sending_unit_name").innerHTML = "AAVE"
+            document.getElementById("eth_logo").src = "../erc20data/aave_logo.png"
+        })
+
         accounts = await provider.request({ method: 'eth_requestAccounts' })
         console.log(accounts)
         document.getElementById("my_address").innerHTML += accounts[0]
@@ -425,6 +543,7 @@ window.onload = async function () {
 
     }
     else if (window.location.href.indexOf("view_sent_option.html") !== -1) {
+
         accounts = await provider.request({ method: 'eth_requestAccounts' })
         console.log(accounts)
         document.getElementById("my_address").innerHTML += accounts[0]
@@ -456,10 +575,23 @@ window.onload = async function () {
 
 
                     if (amt !== 0) {
-                        var htmlCode = '<div id="tx1"><div id="tx1-box1"><div class="tx_list_data">' + amt + ' ETHER SENT TO <br>' + receiver_address + '</div><div class="tx_list_claim">STATUS : <br>' + claim_status + '</div></div><div class="tx_list_revert" data-target="#revert_conf_box" data-toggle="modal" >REVERT THIS TRANSACTION</div><div class="line"></div></div>';
-                        document.getElementById('sent_tx_list').innerHTML += htmlCode
 
-                        document.getElementById('no-sent-tx-page').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
+                        if (result[i]["reverted"] == false) {
+
+                            var htmlCode = '<div id="tx1"><div id="tx1-box1"><div class="tx_list_data">' + amt + ' ETHER SENT TO <br>' + receiver_address + '</div><div class="tx_list_claim">STATUS : <br>' + claim_status + '</div></div><div class="tx_list_revert" data-target="#revert_conf_box" data-toggle="modal" >REVERT THIS TRANSACTION</div><div class="line"></div></div>';
+                            document.getElementById('sent_tx_list').innerHTML += htmlCode
+
+                            document.getElementById('no-sent-tx-page').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
+
+                        } else if (result[i]["reverted"] == true) {
+
+                            var htmlCode = '<div id="tx1"><div id="tx1-box1"><div class="tx_list_data">' + amt + ' ETHER SENT TO <br>' + receiver_address + '</div><div class="tx_list_claim">STATUS : <br>' + claim_status + '</div></div><div class="tx_list_revert already_rev">ALREADY REVERTED</div><div class="line"></div></div>';
+                            document.getElementById('sent_tx_list').innerHTML += htmlCode
+
+                            document.getElementById('no-sent-tx-page').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
+
+                        }
+
                     }
 
 
@@ -469,6 +601,27 @@ window.onload = async function () {
                 for (let j = 0; j < elements.length; j++) {
                     if (elements[j].innerHTML.indexOf('UNCLAIMED') !== -1) {
                         elements[j].style.color = 'red';
+                    }
+                }
+
+                var revertDataElements = document.getElementsByClassName("tx_list_revert")
+                for (let k = 0; k < revertDataElements.length; k++) {
+                    if (result[k]["reverted"] == false) {
+                        revertDataElements[k].addEventListener("click", () => {
+
+                            let amt = result[k]['amount'] / 1000000000000000000
+                            let receiver_address = result[k]['receiver']
+
+                            document.getElementById("revert_info").innerHTML = amt + ' ETHER SENT TO <br>' + receiver_address
+
+                            console.log('revert data element index: ' + k)
+                            document.getElementById("accept_revert").addEventListener("click", () => {
+                                const payId = result[k]['paymentId']
+                                contract.methods.revertPayment(payId).send({ from: accounts[0] }, (error, txHash) => {
+                                    console.log(txHash)
+                                })
+                            })
+                        })
                     }
                 }
 

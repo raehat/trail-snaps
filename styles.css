@@ -224,3 +224,49 @@
     margin-bottom: 50px;
     font-weight: bold;
 }
+
+#select_erc20_token {
+    background-color: rgb(209, 209, 209);
+    padding: 4px;
+    border-radius: 10px;
+    padding-left: 5px;
+    display: flex;
+}
+
+#eth_logo {
+    width: 26px;
+    height: 26px;
+}
+
+.token_modal_list {
+    display: flex;
+    margin-top: 10px;
+}
+
+.token_img {
+    width: 26px;
+    height: 26px;
+    margin-right: 10px;
+    margin-left: 23px;
+}
+
+#erc20_addr_box {
+    display: table;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#sending_unit_name {
+    margin-left: 6px;
+}
+
+#sending_unit_logo {
+    margin-left: 6px;
+}
+
+.already_rev {
+    background-color: aliceblue;
+    color: black;
+}

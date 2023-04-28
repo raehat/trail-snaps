@@ -22,7 +22,8 @@
                 Address :
             </div>
             <div>
-                <img id="kebab_icon" data-target="#exampleModalLong" data-toggle="modal" src="../assets/kebab.png" alt="">
+                <img id="kebab_icon" data-target="#exampleModalLong" data-toggle="modal" src="../assets/kebab.png"
+                    alt="">
             </div>
         </div>
         <div id="send_heading">
@@ -30,10 +31,19 @@
         </div>
         <div class="line"></div>
         <form id="send_form">
-            <label for="receiving_address">Receiving Address</label><br>
+            <label for="receiving_address"> Receiving Address</label><br>
             <input type="text" id="receiving_address" name="receiving_address" placeholder="Receiving Address"><br>
-            <label id="amt_send_label" for="amount_to_be_send">Amount to be send</label><br>
+            <label id="amt_send_label" for="amount_to_be_send"> Amount to be send</label><br>
             <input type="text" id="amount_to_be_send" name="amount_to_be_send" placeholder="Amount to be send"><br><br>
+            <label for="select_erc20_token">Unit (Click below to change)</label>
+            <div id="select_erc20_token" data-target="#erc20_list_modal" data-toggle="modal">
+                <div id="sending_unit_logo">
+                    <img id="eth_logo" src="../erc20data/eth_logo.png" alt="">
+                </div>
+                <div id="sending_unit_name">
+                    ETHER
+                </div>
+            </div>
             <div id="send_eth">
                 SEND
             </div>
@@ -62,6 +72,72 @@
                             <div class="line line-gray"></div>
                             <div id="view_unclaimed_option" class="txt_center">
                                 View unclaimed transactions
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="erc20_list_modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Select Token you wish to send</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="token_modal_list" id="eth_token">
+                                <img class="token_img" src="../erc20data/eth_logo.png" alt="">
+                                <div id="eth_token_text">
+                                    ETHER (Selected)
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="token_modal_list" id="tether_token">
+                                <img class="token_img" src="../erc20data/tether_logo.png" alt="">
+                                <div id="tether_token_text">
+                                    TETHER
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="token_modal_list" id="binance_token">
+                                <img class="token_img" src="../erc20data/binance_logo.png" alt="">
+                                <div id="binance_token_text">
+                                    BINANCE TOKEN
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="token_modal_list" id="uniswap_token">
+                                <img class="token_img" src="../erc20data/uniswap_logo.svg" alt="">
+                                <div id="uniswap_token_text">
+                                    UNISWAP TOKEN
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="token_modal_list" id="aave_token">
+                                <img class="token_img" src="../erc20data/aave_logo.png" alt="">
+                                <div id="aave_token_text">
+                                    AAVE TOKEN
+                                </div>
+                            </div>
+                            <div>
+                                <div style="margin-top: 20px; text-align: center; font-weight: bold;">
+                                    Don't see your token here?
+                                </div>
+                                <form id="erc20_addr_box">
+                                    <label style="text-align: center;" for="erc20_token_address">Enter your ERC20 Token
+                                        address here</label>
+                                    <input style="text-align: center; width: 280px; border-radius: 10px;" type="text" id="erc20_token_address" name=""
+                                        placeholder="ERC20 Token address"><br><br>
+                                </form>
                             </div>
                         </div>
                     </div>
