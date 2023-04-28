@@ -265,3 +265,8 @@
 #sending_unit_logo {
     margin-left: 6px;
 }
+
+.already_rev {
+    background-color: aliceblue;
+    color: black;
+}
