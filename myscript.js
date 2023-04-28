@@ -411,6 +411,55 @@ window.onload = async function () {
         document.getElementById("connect_button").addEventListener("click", connect_metamask);
     else if (window.location.href.indexOf("homepage.html") !== -1) {
 
+        var selectedToken = "eth_token_text"
+        var selectedTokenText = "ETHER"
+
+        document.getElementById("eth_token_text").addEventListener("click", () => {
+            document.getElementById(selectedToken).innerHTML = selectedTokenText
+            document.getElementById("eth_token_text").innerHTML = "ETHER (SELECTED)"
+            selectedToken = "eth_token_text"
+            selectedTokenText = "ETHER"
+
+            document.getElementById("sending_unit_name").innerHTML = "ETHER"
+            document.getElementById("eth_logo").src = "../erc20data/eth_logo.png"
+        })
+        document.getElementById("tether_token_text").addEventListener("click", () => {
+            document.getElementById(selectedToken).innerHTML = selectedTokenText
+            document.getElementById("tether_token_text").innerHTML = "TETHER (SELECTED)"
+            selectedToken = "tether_token_text"
+            selectedTokenText = "TETHER"
+
+            document.getElementById("sending_unit_name").innerHTML = "TETHER"
+            document.getElementById("eth_logo").src = "../erc20data/tether_logo.png"
+        })
+        document.getElementById("binance_token_text").addEventListener("click", () => {
+            document.getElementById(selectedToken).innerHTML = selectedTokenText
+            document.getElementById("binance_token_text").innerHTML = "BINANCE (SELECTED)"
+            selectedToken = "binance_token_text"
+            selectedTokenText = "BINANCE"
+
+            document.getElementById("sending_unit_name").innerHTML = "BINANCE"
+            document.getElementById("eth_logo").src = "../erc20data/binance_logo.png"
+        })
+        document.getElementById("uniswap_token_text").addEventListener("click", () => {
+            document.getElementById(selectedToken).innerHTML = selectedTokenText
+            document.getElementById("uniswap_token_text").innerHTML = "UNISWAP (SELECTED)"
+            selectedToken = "uniswap_token_text"
+            selectedTokenText = "UNISWAP"
+
+            document.getElementById("sending_unit_name").innerHTML = "UNISWAP"
+            document.getElementById("eth_logo").src = "../erc20data/uniswap_logo.svg"
+        })
+        document.getElementById("aave_token_text").addEventListener("click", () => {
+            document.getElementById(selectedToken).innerHTML = selectedTokenText
+            document.getElementById("aave_token_text").innerHTML = "AAVE (SELECTED)"
+            selectedToken = "aave_token_text"
+            selectedTokenText = "AAVE"
+
+            document.getElementById("sending_unit_name").innerHTML = "AAVE"
+            document.getElementById("eth_logo").src = "../erc20data/aave_logo.png"
+        })
+
         accounts = await provider.request({ method: 'eth_requestAccounts' })
         console.log(accounts)
         document.getElementById("my_address").innerHTML += accounts[0]
@@ -425,6 +474,7 @@ window.onload = async function () {
 
     }
     else if (window.location.href.indexOf("view_sent_option.html") !== -1) {
+
         accounts = await provider.request({ method: 'eth_requestAccounts' })
         console.log(accounts)
         document.getElementById("my_address").innerHTML += accounts[0]
