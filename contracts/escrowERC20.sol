@@ -1,9 +1,12 @@
 pragma solidity ^0.8.4;
 
-contract ETHEscrow {
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
+contract ERC20Escrow {
     struct Payment {
-        address payable sender;
-        address payable receiver;
+        address sender;
+        address receiver;
+        address erc20Token;
         uint256 amount;
         uint256 deadline;
         bool claimed;
@@ -17,23 +20,28 @@ contract ETHEscrow {
     Payment[] public payments;
     uint256 public currPaymentId = 0;
 
-    event PaymentInitiated(uint256 payId, address sender, address receiver, uint256 amount, uint256 deadline);
-    event PaymentClaimed(uint256 payId, address sender, address receiver, uint256 amount);
-    event PaymentReverted(uint256 payId, address sender, address receiver, uint256 amount);
+    event PaymentInitiated(uint256 payId, address sender, address receiver, address erc20Token, uint256 amount, uint256 deadline);
+    event PaymentClaimed(uint256 payId, address sender, address receiver, address erc20Token, uint256 amount);
+    event PaymentReverted(uint256 payId, address sender, address receiver, address erc20Token, uint256 amount);
 
-    function sendPayment(address payable _receiver, uint256 _timeAhead) external payable {
+    function sendPayment(address _receiver, address _erc20Token, uint256 _amount, uint256 _timeAhead) external {
         require(msg.sender != _receiver, "Sender and receiver cannot be the same");
         uint256 deadline = block.timestamp + _timeAhead;
         require(deadline > block.timestamp, "Deadline must be in the future");
-        require(msg.value > 0, "Payment amount must be greater than zero");
+        require(_amount > 0, "Payment amount must be greater than zero");
 
         currPaymentId++;
-        Payment memory payment = Payment(payable(msg.sender), _receiver, msg.value, deadline, false, false, currPaymentId);
+        Payment memory payment = Payment(msg.sender, _receiver, _erc20Token, _amount, deadline, false, false, currPaymentId);
         sentPayments[msg.sender][currPaymentId] = payment;
         receivedPayments[_receiver][currPaymentId] = payment;
-        payments.push(payment);
 
-        emit PaymentInitiated(currPaymentId, msg.sender, _receiver, msg.value, deadline);
+        
+        IERC20 token = IERC20(payment.erc20Token);
+        //sender will have to first give allowance to contract
+        token.transferFrom(msg.sender, address(this), _amount);
+
+        payments.push(payment);
+        emit PaymentInitiated(currPaymentId, msg.sender, _receiver, _erc20Token, _amount, deadline);
     }
 
     function claimPayment(uint256 _paymentId) external {
@@ -46,9 +54,12 @@ contract ETHEscrow {
 
         payment.claimed = true;
         payment_sender.claimed = true;
-        payment.receiver.transfer(payment.amount);
 
-        emit PaymentClaimed(_paymentId, payment.sender, payment.receiver, payment.amount);
+        payments[_paymentId - 1].claimed = true;
+        IERC20 token = IERC20(payment.erc20Token);
+        token.transfer(payment.receiver, payment.amount);
+
+        emit PaymentClaimed(_paymentId, payment.sender, payment.receiver, payment.erc20Token, payment.amount);
     }
 
     function revertPayment(uint256 _paymentId) external {
@@ -58,9 +69,12 @@ contract ETHEscrow {
         require(!payment.reverted, "Payment has already been reverted");
 
         payment.reverted = true;
-        payment.sender.transfer(payment.amount);
+        payments[_paymentId - 1].reverted = true;
 
-        emit PaymentReverted(_paymentId, payment.sender, payment.receiver, payment.amount);
+        IERC20 token = IERC20(payment.erc20Token);
+        token.transfer(payment.sender, payment.amount);
+
+        emit PaymentReverted(_paymentId, payment.sender, payment.receiver, payment.erc20Token, payment.amount);
     }
 
     function getSentPayments(address _sender) external view returns (Payment[] memory) {
@@ -87,3 +101,4 @@ contract ETHEscrow {
         return result;
     }
 }
+
