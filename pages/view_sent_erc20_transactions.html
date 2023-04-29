@@ -26,12 +26,12 @@
             </div>
         </div>
         <div id="view_sent_heading">
-            VIEW UNCLAIMED TRANSACTIONS
+            VIEW SENT TRANSACTIONS
         </div>
         <div class="line"></div>
 
-        <div id="unclaimed_list">
-            <div id="tx_unclaimed_list">
+        <div id="sent_tx_list">
+            <div id="no-sent-tx-page">
                 NO TRANSACTIONS TO SHOW
             </div>
         </div>
@@ -57,11 +57,11 @@
                                 View sent transactions (Ether)
                             </div>
                             <div class="line line-gray"></div>
-                            <div id="view_unclaimed_option" class="txt_center active_option">
+                            <div id="view_unclaimed_option" class="txt_center">
                                 View unclaimed transactions (Ether)
                             </div>
                             <div class="line line-gray"></div>
-                            <div id="view_sent_erc20_option" class="txt_center">
+                            <div id="view_sent_erc20_option" class="txt_center active_option">
                                 View sent transactions (ERC20)
                             </div>
                             <div class="line line-gray"></div>
@@ -72,6 +72,34 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="revert_conf_box" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Options</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="revert_heading" style="text-align: center;">
+                            Do you want to revert this transaction?
+                        </div>
+                        <div id="revert_info" style="margin-top: 30px; text-align: center;">
+                            20 ETHER SENT TO 0xdA2D10c332E6D86d7543F30f <br> 64A90770346A1f54
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="reject_revert" type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Reject</button>
+                        <button id="accept_revert" type="button" class="btn"
+                            style="background-color: #686C8C; color: white;">Accept</button>
                     </div>
                 </div>
             </div>

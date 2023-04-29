@@ -21,18 +21,19 @@
                 Address :
             </div>
             <div>
-                <img id="kebab_icon" data-target="#exampleModalLong" data-toggle="modal" src="../assets/kebab.png" alt="">
+                <img id="kebab_icon" data-target="#exampleModalLong" data-toggle="modal" src="../assets/kebab.png"
+                    alt="">
             </div>
         </div>
         <div id="view_sent_heading">
             VIEW SENT TRANSACTIONS
         </div>
         <div class="line"></div>
-        
+
         <div id="sent_tx_list">
-           <div id="no-sent-tx-page">
-            NO TRANSACTIONS TO SHOW
-           </div>
+            <div id="no-sent-tx-page">
+                NO TRANSACTIONS TO SHOW
+            </div>
         </div>
 
         <!-- Modal -->
@@ -53,11 +54,19 @@
                             </div>
                             <div class="line line-gray"></div>
                             <div id="view_sent_option" class="txt_center active_option">
-                                View sent transactions
+                                View sent transactions (Ether)
                             </div>
                             <div class="line line-gray"></div>
                             <div id="view_unclaimed_option" class="txt_center">
-                                View unclaimed transactions
+                                View unclaimed transactions (Ether)
+                            </div>
+                            <div class="line line-gray"></div>
+                            <div id="view_sent_erc20_option" class="txt_center">
+                                View sent transactions (ERC20)
+                            </div>
+                            <div class="line line-gray"></div>
+                            <div id="view_unclaimed_erc20_option" class="txt_center">
+                                View unclaimed transactions (ERC20)
                             </div>
                         </div>
                     </div>
@@ -68,8 +77,8 @@
             </div>
         </div>
 
-        <div class="modal fade" id="revert_conf_box" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal fade" id="revert_conf_box" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -87,8 +96,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="reject_revert" type="button" class="btn btn-secondary" data-dismiss="modal">Reject</button>
-                        <button id="accept_revert" type="button" class="btn" style="background-color: #686C8C; color: white;">Accept</button>
+                        <button id="reject_revert" type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Reject</button>
+                        <button id="accept_revert" type="button" class="btn"
+                            style="background-color: #686C8C; color: white;">Accept</button>
                     </div>
                 </div>
             </div>
