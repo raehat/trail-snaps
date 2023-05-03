@@ -1159,6 +1159,7 @@ const contract_erc20_abi = [
 ]
 
 const dai_token_address = "0x7AF17A48a6336F7dc1beF9D485139f7B6f4FB5C8"
+const tether_token_address = "0xB6434EE024892CBD8e3364048a259Ef779542475"
 
 const contract_ether_address = '0x610319176dFA876d438d20E71C390Cb74ED5Ab66'
 
@@ -1190,17 +1191,23 @@ async function send_eth() {
 
     if (selectedToken !== "eth_token_text") {
         // erc20 transfer
+        console.log("selectedToken")
+        console.log(selectedToken)
 
         var amt_erc20_tokens = document.getElementById("amount_to_be_send").value
 
-        var token_contract
+        var token_addr
 
         if (selectedToken == "dai_token_text")
-            token_contract = new web3.eth.Contract(contract_mytoken_abi, dai_token_address)
-        else if (document.getElementById("erc20_token_address").value.length > 0)
-            token_contract = new web3.eth.Contract(contract_mytoken_abi, document.getElementById("erc20_token_address").value)
+            token_addr = dai_token_address
+        else if (selectedToken == "tether_token_text")
+            token_addr = tether_token_address
+        else if (selectedToken == "own_token")
+            token_addr = document.getElementById("erc20_token_address").value
         else
             return
+
+        var token_contract = new web3.eth.Contract(contract_mytoken_abi, token_addr)
 
         console.log(document.getElementById("erc20_token_address").value.length)
 
@@ -1214,7 +1221,7 @@ async function send_eth() {
             }
             /* global BigInt */
             amt_erc20_tokens = amt_erc20_tokens * 1000000000000000000
-            erc20_escrow_contract.methods.sendPayment(document.getElementById("receiving_address").value, dai_token_address,
+            erc20_escrow_contract.methods.sendPayment(document.getElementById("receiving_address").value, token_addr,
                 BigInt(amt_erc20_tokens), tenDaysFromNow
             ).send({ from: accounts[0] }, (error, txHash) => {
                 console.log(txHash)
@@ -1325,7 +1332,7 @@ window.onload = async function () {
             document.getElementById("sending_unit_name").innerHTML = "DAI"
             document.getElementById("eth_logo").src = "../erc20data/dai_logo.png"
         })
-        document.getElementById("erc20_own_token_btn").addEventListener("click", () => {
+        document.getElementById("erc20_own_token_btn").addEventListener("click", async () => {
             ownTokenAddress = ""
             if (document.getElementById("erc20_token_address").value.length == 0) {
                 alert("Enter some address first!")
@@ -1336,7 +1343,10 @@ window.onload = async function () {
             selectedToken = "own_token"
             selectedTokenText = "OWN TOKEN"
 
-            document.getElementById("sending_unit_name").innerHTML = ownTokenAddress + " (Token Address)"
+            var contract = new web3.eth.Contract(contract_mytoken_abi, ownTokenAddress)
+            var token_name = await contract.methods.name().call()
+
+            document.getElementById("sending_unit_name").innerHTML = token_name
             document.getElementById("eth_logo").src = "../erc20data/eth_logo.png"
         })
 
@@ -1401,10 +1411,17 @@ window.onload = async function () {
 
                         if (result[i]["reverted"] == false) {
 
-                            var htmlCode = '<div id="tx1"><div id="tx1-box1"><div class="tx_list_data">' + amt + ' ETHER SENT TO <br>' + receiver_address + '</div><div class="tx_list_claim">STATUS : <br>' + claim_status + '</div></div><div class="tx_list_revert" data-target="#revert_conf_box" data-toggle="modal" >REVERT THIS TRANSACTION</div><div class="line"></div></div>';
-                            document.getElementById('sent_tx_list').innerHTML += htmlCode
+                            if (result[i]["claimed"] == true) {
+                                var htmlCode = '<div id="tx1"><div id="tx1-box1"><div class="tx_list_data">' + amt + ' ETHER SENT TO <br>' + receiver_address + '</div><div class="tx_list_claim">STATUS : <br>' + claim_status + '</div></div><div class="tx_list_revert already_rev">ALREADY CLAIMED</div><div class="line"></div></div>';
+                                document.getElementById('sent_tx_list').innerHTML += htmlCode
 
-                            document.getElementById('no-sent-tx-page').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
+                                document.getElementById('no-sent-tx-page').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
+                            } else {
+                                var htmlCode = '<div id="tx1"><div id="tx1-box1"><div class="tx_list_data">' + amt + ' ETHER SENT TO <br>' + receiver_address + '</div><div class="tx_list_claim">STATUS : <br>' + claim_status + '</div></div><div class="tx_list_revert" data-target="#revert_conf_box" data-toggle="modal" >REVERT THIS TRANSACTION</div><div class="line"></div></div>';
+                                document.getElementById('sent_tx_list').innerHTML += htmlCode
+
+                                document.getElementById('no-sent-tx-page').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
+                            }
 
                         } else if (result[i]["reverted"] == true) {
 
@@ -1566,10 +1583,17 @@ window.onload = async function () {
 
                         if (result[i]["reverted"] == false) {
 
-                            var htmlCode = '<div id="tx1"><div id="tx1-box1"><div class="tx_list_data">' + amt + " " + token_name + ' SENT TO <br>' + receiver_address + '</div><div class="tx_list_claim">STATUS : <br>' + claim_status + '</div></div><div class="tx_list_revert" data-target="#revert_conf_box" data-toggle="modal" >REVERT THIS TRANSACTION</div><div class="line"></div></div>';
-                            document.getElementById('sent_tx_list').innerHTML += htmlCode
+                            if (result[i]["claimed"] == true) {
+                                var htmlCode = '<div id="tx1"><div id="tx1-box1"><div class="tx_list_data">' + amt + " " + token_name + ' SENT TO <br>' + receiver_address + '</div><div class="tx_list_claim">STATUS : <br>' + claim_status + '</div></div><div class="tx_list_revert already_rev">ALREADY CLAIMED</div><div class="line"></div></div>';
+                                document.getElementById('sent_tx_list').innerHTML += htmlCode
 
-                            document.getElementById('no-sent-tx-page').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
+                                document.getElementById('no-sent-tx-page').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
+                            } else {
+                                var htmlCode = '<div id="tx1"><div id="tx1-box1"><div class="tx_list_data">' + amt + " " + token_name + ' SENT TO <br>' + receiver_address + '</div><div class="tx_list_claim">STATUS : <br>' + claim_status + '</div></div><div class="tx_list_revert" data-target="#revert_conf_box" data-toggle="modal" >REVERT THIS TRANSACTION</div><div class="line"></div></div>';
+                                document.getElementById('sent_tx_list').innerHTML += htmlCode
+
+                                document.getElementById('no-sent-tx-page').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
+                            }
 
                         } else if (result[i]["reverted"] == true) {
 
@@ -1641,7 +1665,7 @@ window.onload = async function () {
             window.location = "./view_sent_erc20_transactions.html"
         })
 
-        erc20_escrow_contract.methods.getReceivedPayments(accounts[0]).call((error, result) => {
+        erc20_escrow_contract.methods.getReceivedPayments(accounts[0]).call(async (error, result) => {
             console.log(result)
 
             for (let i = 0; i < result.length; i++) {
@@ -1651,6 +1675,13 @@ window.onload = async function () {
                 let claimed = result[i]['claimed']
                 let sender = result[i]['sender']
 
+                let erc20_address = result[i]['erc20Token']
+                token_contract = new web3.eth.Contract(contract_mytoken_abi, erc20_address)
+                var token_name = ""
+                token_name = await token_contract.methods.name().call()
+                console.log(token_name)
+
+
                 let claimed_btn_txt = 'CLAIM'
                 if (claimed == false)
                     claimed_btn_txt = 'CLAIM'
@@ -1659,7 +1690,7 @@ window.onload = async function () {
                 }
 
                 if (amt !== 0) {
-                    var htmlCode = '<div id="tx_unclaimed_1"><div class="unclaimed_box_1">' + sender + ' SENT YOU ' + amt + ' ETHER</div><div class="unclaimed_claim_button">' + claimed_btn_txt + '</div><div class="line"></div></div>';
+                    var htmlCode = '<div id="tx_unclaimed_1"><div class="unclaimed_box_1">' + sender + ' SENT YOU ' + amt + ' ' + token_name + '</div><div class="unclaimed_claim_button">' + claimed_btn_txt + '</div><div class="line"></div></div>';
                     document.getElementById('unclaimed_list').innerHTML += htmlCode
 
                     document.getElementById('tx_unclaimed_list').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
