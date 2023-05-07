@@ -1272,6 +1272,8 @@ window.onload = async function () {
         document.getElementById("connect_button").addEventListener("click", connect_metamask);
     else if (window.location.href.indexOf("homepage.html") !== -1) {
 
+        chrome.runtime.sendMessage({pageLoaded: true});
+
         document.getElementById("eth_token_text").addEventListener("click", () => {
             if (ownTokenAddress.length == 0)
                 document.getElementById(selectedToken).innerHTML = selectedTokenText
