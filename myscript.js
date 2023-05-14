@@ -1161,9 +1161,9 @@ const contract_erc20_abi = [
 const dai_token_address = "0x7AF17A48a6336F7dc1beF9D485139f7B6f4FB5C8"
 const tether_token_address = "0xB6434EE024892CBD8e3364048a259Ef779542475"
 
-const contract_ether_address = '0x6C04310A9d3612fAD1aAfAd660EFf434011089a0'
+const contract_ether_address = '0xF9B6C3BE4004E5b2C36fF26e9D19dFe2668F3466'
 
-const erc20_escrow_address = "0x9dAa521803Db7d044625029C60977e9A7Fe82BF5"
+const erc20_escrow_address = "0x3D0f58da5749740765683f58188A95978c30AE65"
 
 const createMetaMaskProvider = require('metamask-extension-provider')
 
@@ -1187,7 +1187,7 @@ async function send_eth() {
     const currentTime = new Date();
 
     // Calculate the timestamp of 10 days from the current time
-    const tenDaysFromNow = new Date(currentTime.getTime() + (10 * 24 * 60 * 60 * 1000)).getTime();
+    const tenDaysFromNow = 864000
 
     if (selectedToken !== "eth_token_text") {
         // erc20 transfer
