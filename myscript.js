@@ -1161,7 +1161,7 @@ const contract_erc20_abi = [
 const dai_token_address = "0x7AF17A48a6336F7dc1beF9D485139f7B6f4FB5C8"
 const tether_token_address = "0xB6434EE024892CBD8e3364048a259Ef779542475"
 
-const contract_ether_address = '0x610319176dFA876d438d20E71C390Cb74ED5Ab66'
+const contract_ether_address = '0x6C04310A9d3612fAD1aAfAd660EFf434011089a0'
 
 const erc20_escrow_address = "0x9dAa521803Db7d044625029C60977e9A7Fe82BF5"
 
@@ -1272,7 +1272,7 @@ window.onload = async function () {
         document.getElementById("connect_button").addEventListener("click", connect_metamask);
     else if (window.location.href.indexOf("homepage.html") !== -1) {
 
-        chrome.runtime.sendMessage({pageLoaded: true});
+        chrome.runtime.sendMessage({ pageLoaded: true });
 
         document.getElementById("eth_token_text").addEventListener("click", () => {
             if (ownTokenAddress.length == 0)
@@ -1498,9 +1498,12 @@ window.onload = async function () {
                 let amt = result[i]['amount'] / 1000000000000000000
                 let claimed = result[i]['claimed']
                 let sender = result[i]['sender']
+                let reverted_data = result[i]['reverted']
 
                 let claimed_btn_txt = 'CLAIM'
-                if (claimed == false)
+                if (reverted_data == true)
+                    claimed_btn_txt = 'TRANSACTION REVERTED'
+                else if (claimed == false)
                     claimed_btn_txt = 'CLAIM'
                 else if (claimed == true) {
                     claimed_btn_txt = 'ALREADY CLAIMED'
@@ -1508,6 +1511,7 @@ window.onload = async function () {
 
                 if (amt !== 0) {
                     var htmlCode = '<div id="tx_unclaimed_1"><div class="unclaimed_box_1">' + sender + ' SENT YOU ' + amt + ' ETHER</div><div class="unclaimed_claim_button">' + claimed_btn_txt + '</div><div class="line"></div></div>';
+
                     document.getElementById('unclaimed_list').innerHTML += htmlCode
 
                     document.getElementById('tx_unclaimed_list').style = "margin-top: 0px; margin-bottom: 0px; visibility: collapse;"
@@ -1517,7 +1521,8 @@ window.onload = async function () {
 
             var elements = document.getElementsByClassName('unclaimed_claim_button')
             for (let j = 0; j < elements.length; j++) {
-                if (elements[j].innerHTML.indexOf('ALREADY CLAIMED') === -1) {
+                if (elements[j].innerHTML.indexOf('ALREADY CLAIMED') === -1 &&
+                    elements[j].innerHTML.indexOf('TRANSACTION REVERTED') === -1) {
                     elements[j].addEventListener("click", () => {
                         // claim ether
                         console.log("payment ID")
@@ -1570,8 +1575,10 @@ window.onload = async function () {
                     let erc20_address = result[i]['erc20Token']
                     token_contract = new web3.eth.Contract(contract_mytoken_abi, erc20_address)
                     var token_name = ""
-                    token_name = await token_contract.methods.name().call()
-                    console.log(token_name)
+                    if (amt != 0) {
+                        token_name = await token_contract.methods.name().call()
+                        console.log(token_name)
+                    }
 
                     let claim_status = 'claimed'
                     if (result[i]['claimed'] == true) {
@@ -1676,16 +1683,21 @@ window.onload = async function () {
                 let amt = result[i]['amount'] / 1000000000000000000
                 let claimed = result[i]['claimed']
                 let sender = result[i]['sender']
+                let reverted_data = result[i]['reverted']
 
                 let erc20_address = result[i]['erc20Token']
                 token_contract = new web3.eth.Contract(contract_mytoken_abi, erc20_address)
                 var token_name = ""
-                token_name = await token_contract.methods.name().call()
-                console.log(token_name)
+                if (amt != 0) {
+                    token_name = await token_contract.methods.name().call()
+                    console.log(token_name)
+                }
 
 
                 let claimed_btn_txt = 'CLAIM'
-                if (claimed == false)
+                if (reverted_data == true)
+                    claimed_btn_txt = 'TRANSACTION REVERTED'
+                else if (claimed == false)
                     claimed_btn_txt = 'CLAIM'
                 else if (claimed == true) {
                     claimed_btn_txt = 'ALREADY CLAIMED'
@@ -1701,8 +1713,10 @@ window.onload = async function () {
             }
 
             var elements = document.getElementsByClassName('unclaimed_claim_button')
+            console.log("ele length: " + elements.length)
+
             for (let j = 0; j < elements.length; j++) {
-                if (elements[j].innerHTML.indexOf('ALREADY CLAIMED') === -1) {
+                if (elements[j].innerHTML.indexOf('ALREADY CLAIMED') === -1 && elements[j].innerHTML.indexOf('TRANSACTION REVERTED') === -1) {
                     elements[j].addEventListener("click", () => {
                         // claim ether
                         console.log("payment ID")
