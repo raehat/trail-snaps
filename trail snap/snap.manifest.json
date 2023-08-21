@@ -1,0 +1,28 @@
+{
+  "version": "0.1.0",
+  "description": "A metamask snap extending functionalities of Trail",
+  "proposedName": "Trail",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+  },
+  "source": {
+    "shasum": "59XmyeW+5Oy1jZskH2dcrdxTLgiH6AHa3qW/ZY1dn+I=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "iconPath": "images/icon.svg",
+        "packageName": "trail",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "snap_dialog": {},
+    "endowment:rpc": {
+      "dapps": true,
+      "snaps": false
+    }
+  },
+  "manifestVersion": "0.1"
+}

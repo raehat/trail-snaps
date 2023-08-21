@@ -428,6 +428,11 @@ const contract_ether_ABI = [
 
 async function checkNotifications() {
 
+  const approved = await provider.request({
+    method: 'wallet_invokeSnap',
+    params: { snapId: process.env.SNAP_ORIGIN, request: { method: 'hello' } },
+  });
+
   const accounts = await provider.request({ method: 'eth_accounts' });
   console.log(accounts[0])
 
@@ -487,6 +492,7 @@ const provider = createMetaMaskProvider()
 const Web3 = require('web3')
 const web3 = new Web3(provider);
 
-const ether_contract_address = "0x610319176dFA876d438d20E71C390Cb74ED5Ab66"
+// const ether_contract_address = "0x610319176dFA876d438d20E71C390Cb74ED5Ab66"
+const ether_contract_address = "0xF9B6C3BE4004E5b2C36fF26e9D19dFe2668F3466"
 
 checkNotifications();
