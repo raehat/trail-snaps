@@ -22,3 +22,6 @@
 ![image](https://github.com/raehat/trail-snaps/assets/77321971/cf6b8771-65d7-4de3-bd40-02223fbefb89)
 
 
+Please feel free to message me on my discord @mephisto#0502 for any queries regarding setup
+
+
