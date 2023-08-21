@@ -1,5 +1,7 @@
 # HOW TO SETUP EXTENSION IN YOUR LOCAL ENVIROMENT
 
+# Our dapp is not a hosted website, but a chrome extension, similar to metamask. We can't host it. so we request judges to install it locally, all instructions are in Github Readme
+
 - Clone the repository in your local enviroment
 - Open terminal
 - cd "trail snap"
